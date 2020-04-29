@@ -1,5 +1,5 @@
 import React from "react";
-
+import DataBody from "./DataBody";
 
 // created group header content in an HTML table.
 function DataTable({ headings, users, handleSort }) {
