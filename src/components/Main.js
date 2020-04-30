@@ -1,11 +1,11 @@
 import React from "react";
-import DataInfo from "./DataArea";
-import "../styles/Main.css";
+import DataArea from "./DataArea";
+
 
 function Main() {
     return (
         <>
-            <DataInfo />
+            <DataArea />
         </>
     );
 };
