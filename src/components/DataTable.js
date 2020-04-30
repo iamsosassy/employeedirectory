@@ -2,7 +2,8 @@ import React from "react";
 import DataBody from "./DataBody";
 
 // created group header content in an HTML table.
-function DataTable({ headings, users, handleSort }) {
+function DataTable(props) {
+    console.log('this is our props in data table!!', props)
     return (
         <div className="datatable mt-5">
             <table
@@ -11,14 +12,14 @@ function DataTable({ headings, users, handleSort }) {
             >
                 <thead>
                     <tr>
-                        {headings.map(({ name, width }) => {
+                        {props.headings.map(({ name, width }) => {
                             return (
                                 <th
                                     className="col"
                                     key={name}
                                     style={{ width }}
                                     onClick={() => {
-                                        handleSort(name.toLowerCase());
+                                        props.handleSort(name.toLowerCase());
                                     }}
                                 >
                                     {name}
@@ -29,7 +30,7 @@ function DataTable({ headings, users, handleSort }) {
                     </tr>
                 </thead>
 
-                <DataBody users={users} />
+                <DataBody users={props.users} />
             </table>
         </div>
     );

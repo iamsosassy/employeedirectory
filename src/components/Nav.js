@@ -1,7 +1,7 @@
 import React from "react";
-import SearchName from "./SearchName.js.js";
-import SearchDOB from "./SearchDOB.js.js";
-import "../styles/Nav.css";
+import SearchBox from "./SearchBox.js";
+//import SearchDOB from "./SearchDOB.js";
+//import "../styles/Nav.css";
 
 function Nav() {
     return (
@@ -22,7 +22,7 @@ function Nav() {
           <SearchDOB />
         </div> */}
                 <div className="search-area col-4">
-                    <SearchName />
+                    <SearchBox />
                 </div>
             </div>
         </nav>
