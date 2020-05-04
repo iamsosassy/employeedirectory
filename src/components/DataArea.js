@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import DataTable from "./DataTable";
 import Nav from "./Nav";
 
@@ -21,6 +21,7 @@ export default class DataArea extends Component {
                 { first: 'U-God', last: 'Hawkins', Image: 'https://media.wnyc.org/i/800/0/c/85/1/lamont.jpg', Phone: '201-222-3999', Email: 'ugod@wutangclan.com', DOB: '11/10/1970' },
             ],
             order: "descend",
+            showFiltered: false,
             filteredUsers: [{}],
             headings: [
                 { name: "Image", width: "10%" },
@@ -32,83 +33,76 @@ export default class DataArea extends Component {
 
             handleSort: heading => {
 
+                console.log('Time to do the sorting!!!')
+
                 if (this.state.order === "descend") {
+                    var newOrder = this.state.users.sort(function (a, b) {
+                        if (a.last < b.last) {
+                            return -1;
+                        }
+                        if (a.last > b.last) {
+                            return 1;
+                        }
+                        return 0;
+                    });
                     this.setState({
-                        order: "ascend"
+                        order: "ascend", users: newOrder
                     })
                 } else {
+                    var newOrder = this.state.users.sort(function (a, b) {
+                        if (a.last < b.last) {
+                            return 1;
+                        }
+                        if (a.last > b.last) {
+                            return -1;
+                        }
+                        return 0;
+                    });
                     this.setState({
-                        order: "descend"
+                        order: "descend", users: newOrder
                     })
                 }
-
-                const compareFnc = (a, b) => {
-                    if (this.state.order === "ascend") {
-                        // account for missing values
-                        if (a[heading] === undefined) {
-                            return 1;
-                        } else if (b[heading] === undefined) {
-                            return -1;
-                        }
-                        // numerically
-                        else if (heading === "name") {
-                            return a[heading].first.localeCompare(b[heading].first);
-                        } else {
-                            return a[heading] - b[heading];
-                        }
-                    } else {
-                        // account for missing values
-                        if (a[heading] === undefined) {
-                            return 1;
-                        } else if (b[heading] === undefined) {
-                            return -1;
-                        }
-                        // numerically
-                        else if (heading === "name") {
-                            return b[heading].first.localeCompare(a[heading].first);
-                        } else {
-                            return b[heading] - a[heading];
-                        }
-                    }
-
-                }
-                const sortedUsers = this.state.filteredUsers.sort(compareFnc);
-                this.setState({ filteredUsers: sortedUsers });
-            },
-            handleSearchChange: event => {
-                console.log(event.target.value);
-                const filter = event.target.value;
-                const filteredList = this.state.users.filter(item => {
-                    // merge data together, then see if user input is anywhere inside
-                    let values = Object.values(item)
-                        .join("")
-                        .toLowerCase();
-                    return values.indexOf(filter.toLowerCase()) !== -1;
-                });
-                this.setState({ filteredUsers: filteredList });
+                console.log('Thi si sour new order!!!', newOrder)
             }
         };
     }
 
-    componentDidMount() {
-        // API.getUsers().then(results => {
-        //     this.setState({
-        //         users: results.data.results,
-        //         filteredUsers: results.data.results
-        //     });
+    handleSearchChange = event => {
+        console.log('WE R TYPING IN SERACH!!!', event.target.value);
+        const filter = event.target.value;
+
+        var filteredPpl = []
+
+        for (var i = 0; i < this.state.users.length; i++) {
+            console.log('looping ?', this.state.users[i].DOB.substring(0, event.target.value.length))
+            if (this.state.users[i].DOB.substring(0, event.target.value.length) === event.target.value) {
+                filteredPpl.push(this.state.users[i])
+            }
+        }
+        console.log('this is our filted ppl1!!', filteredPpl)
+        this.setState({ showFiltered: true, filteredUsers: filteredPpl })
+
+        // const filteredList = this.state.users.filter(item => {
+        //     // merge data together, then see if user input is anywhere inside
+        //     let values = Object.values(item)
+        //         .join("")
+        //         .toLowerCase();
+        //     return values.indexOf(filter.toLowerCase()) !== -1;
         // });
+        // this.setState({ filteredUsers: filteredList });
     }
+
 
     render() {
         console.log('this is our state!!!!', this.state)
 
         return (
             <>
-                <Nav handleSearchChange={this.state.handleSearchChange} />
+                <Nav handleSearchChange={this.handleSearchChange} />
                 <div className="data-area">
                     <DataTable
                         headings={this.state.headings}
-                        users={this.state.users}
+                        users={this.state.showFiltered ? this.state.filteredUsers : this.state.users}
                         handleSort={this.state.handleSort}
                     />
                 </div>

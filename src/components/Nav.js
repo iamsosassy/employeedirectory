@@ -3,7 +3,8 @@ import SearchBox from "./SearchBox.js";
 //import SearchDOB from "./SearchDOB.js";
 //import "../styles/Nav.css";
 
-function Nav() {
+function Nav(props) {
+    console.log('here are our props in nov!!!', props)
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <button
@@ -22,7 +23,7 @@ function Nav() {
           <SearchDOB />
         </div> */}
                 <div className="search-area col-4">
-                    <SearchBox />
+                    <SearchBox handleSearchChange={props.handleSearchChange} />
                 </div>
             </div>
         </nav>
