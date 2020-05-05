@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 
 // created data for content
 function DataBody({ users }) {
-    console.log('this is our users in data body!!!', users)
+    // console.log('this is our users in data body!!!', users)
 
 
 

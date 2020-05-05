@@ -3,7 +3,7 @@ import DataBody from "./DataBody";
 
 // created group header content in an HTML table.
 function DataTable(props) {
-    console.log('this is our props in data table!!', props)
+    // console.log('this is our props in data table!!', props)
     return (
         <div className="datatable mt-5">
             <table
